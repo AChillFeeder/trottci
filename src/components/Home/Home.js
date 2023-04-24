@@ -2,8 +2,10 @@ import React from 'react';
 
 const Home = () => {
     return (
-        <>
-        </>
+        <div id='banner'>
+            
+            <p>This is home</p>
+        </div>
     );
 }
 
