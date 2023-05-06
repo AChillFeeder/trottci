@@ -76,3 +76,6 @@ def test_get_products():
     assert data['availability'] == availability[0]
     assert data['category'] == category
 
+# test edit product
+
+# test save product through api

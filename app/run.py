@@ -51,6 +51,7 @@ class Product(db.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             'name': self.name,
             'description': self.description,
             'price': str(self.price),
@@ -59,6 +60,8 @@ class Product(db.Model):
             'availability': str(self.availability),
             'category': str(self.category)
         }
+
+
 with app.app_context():
     # Create the database tables
     db.create_all()
@@ -80,7 +83,9 @@ def getProductByProductName(productName):
 
 @app.route('/products', methods=["POST"])
 def postProducts():
-    Product('test1', 'desc1', 10, 'imageurl', 'link', 'disponible', 'categorie 1').save()
+    data = request.json
+    Product(data["name"], data["description"], data["price"], data['imageUrl'], data['link'], data['availability'], data['category']).save()
+    return data
 
 @app.route('/products/<int:product_id>', methods=["PUT"])
 def editProducts(product_id):
