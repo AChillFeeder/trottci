@@ -1,10 +1,18 @@
 import React from 'react';
+import Header from './Header';
+import Catalogue from './Catalogue';
+import Information from './Information';
+import Contact from './Contact';
+import Navbar from './Navbar';
 
 const Home = () => {
     return (
-        <div id='banner'>
-            
-            <p>This is home</p>
+        <div>
+            <Navbar />
+            <Header />
+            <Catalogue />
+            <Information />
+            <Contact />
         </div>
     );
 }

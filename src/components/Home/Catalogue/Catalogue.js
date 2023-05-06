@@ -1,10 +1,13 @@
 import React from 'react';
+import Product from './Product';
 
 const Catalogue = () => {
     return (
-        <>
-            <p>This is the Catalogue section, it is a catalogue of many "item" components</p>
-        </>
+        <div id="catalogue">
+            <h2>Grand titre</h2>
+            {/* LOOP */}
+            <Product />
+        </div>
     );
 }
 
