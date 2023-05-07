@@ -79,3 +79,5 @@ def test_get_products():
 # test edit product
 
 # test save product through api
+
+# test on IDs that don't exist

@@ -1,5 +1,5 @@
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -89,9 +89,8 @@ def postProducts():
 
 @app.route('/products/<int:product_id>', methods=["PUT"])
 def editProducts(product_id):
-    product = Product.query.get_or_404(product_id)
+    product = Product.query.get_or_404(product_id) # use get_or_404 when you are sure the requested row exists
 
-    # Get the request data
     data = request.json
 
     # Update the product attributes
@@ -116,9 +115,18 @@ def editProducts(product_id):
     # Return the updated product as JSON
     return product.to_dict()
 
-@app.route('/products', methods=["DELETE"])
-def deleteProducts():
-    pass
+@app.route('/products/<int:product_id>', methods=['DELETE'])
+def deleteProduct(product_id):
+    # Check if product exists
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({'message': 'Product not found'}), 404
+
+    # Delete product from database
+    db.session.delete(product)
+    db.session.commit()
+
+    return jsonify({'message': 'Product deleted successfully'})
 
 # TARIFFS
 @app.route('/tariffs', methods=["get"])
