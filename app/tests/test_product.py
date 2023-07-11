@@ -80,4 +80,6 @@ def test_get_products():
 
 # test save product through api
 
+# test delete product
+
 # test on IDs that don't exist

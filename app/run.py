@@ -44,11 +44,6 @@ class Product(db.Model):
         """Get a product by ID."""
         return Product.query.get(id)
 
-    # @staticmethod
-    # def get_by_name(username):
-    #     """Get a Product by name."""
-    #     return Product.query.filter_by(username=username).first()
-
     def to_dict(self):
         return {
             'id': self.id,
@@ -59,6 +54,41 @@ class Product(db.Model):
             'link': str(self.link),
             'availability': str(self.availability),
             'category': str(self.category)
+        }
+
+
+class Service(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(120))
+    price = db.Column(db.Integer)
+
+    def __init__(self, name, description, price):
+        self.name = name
+        self.description = description
+        self.price = price
+
+    def save(self):
+        """Save a product to the database."""
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        """Delete a product from the database."""
+        db.session.delete(self)
+        db.session.commit()
+
+    @staticmethod
+    def get_by_id(id):
+        """Get a product by ID."""
+        return Service.query.get(id)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'price': str(self.price),
         }
 
 
@@ -76,9 +106,9 @@ def getProducts():
         data.append(product.to_dict()) 
     return data
 
-@app.route('/products/<productName>', methods=["GET"])
-def getProductByProductName(productName):
-    product = Product.query.filter_by(name=productName)
+@app.route('/products/<productId>', methods=["GET"])
+def getProductByProductId(productId):
+    product = Product.query.filter_by(name=productId)
     return product[0].to_dict()
 
 @app.route('/products', methods=["POST"])
@@ -128,19 +158,61 @@ def deleteProduct(product_id):
 
     return jsonify({'message': 'Product deleted successfully'})
 
-# TARIFFS
-@app.route('/tariffs', methods=["get"])
-def getTariffs():
-    pass
-@app.route('/tariffs', methods=["post"])
-def postTariffs():
-    pass
-@app.route('/tariffs', methods=["edit"])
-def editTariffs():
-    pass
-@app.route('/tariffs', methods=["delete"])
-def deleteTariffs():
-    pass
+
+
+# SERVICES
+@app.route('/services', methods=["GET"])
+def getServices():
+    services = Service.query.all()
+    data = []
+    for service in services:
+        data.append(service.to_dict()) 
+    return data
+
+@app.route('/services/<serviceId>', methods=["GET"])
+def getServiceByServiceId(serviceId):
+    service = Service.query.filter_by(id=serviceId)
+    return service[0].to_dict()
+
+@app.route('/services', methods=["POST"])
+def postServices():
+    data = request.json
+    Service(data["name"], data["description"], data["price"]).save()
+    return data
+
+@app.route('/services/<int:service_id>', methods=["PUT"])
+def editServices(service_id):
+    service = Service.query.get_or_404(service_id) # use get_or_404 when you are sure the requested row exists
+
+    data = request.json
+
+    # Update the product attributes
+    if 'name' in data:
+        service.name = data['name']
+    if 'description' in data:
+        service.description = data['description']
+    if 'price' in data:
+        service.price = data['price']
+    
+    # Save the changes to the database
+    db.session.commit()
+
+    # Return the updated product as JSON
+    return service.to_dict()
+
+
+@app.route('/services/<int:service_id>', methods=['DELETE'])
+def deleteServices(service_id):
+    # Check if Service exists
+    service = Service.query.get(service_id)
+    if not service:
+        return jsonify({'message': 'Service not found'}), 404
+
+    # Delete Service from database
+    db.session.delete(service)
+    db.session.commit()
+
+    return jsonify({'message': 'Service deleted successfully'})
 
 
 if __name__ == '__main__':
