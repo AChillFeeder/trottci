@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,700;1,400&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  --yellow: #FAF032;
+  --red: #F75C78;
+  --darker-yellow: #ABA426;
+  --dark-blue: #1D82AB;
+  --blue: #43C3F7;
+  --background-blue: #43c4f704;
+
+  background-color: var(--background-blue);
+}
+
+/* Banner */
+.banner {
+  background-image: linear-gradient(360deg, rgba(0,0,0,1), rgba(0,0,0,0)), url('./trottinettes_banner_background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5%;
+  /* align-items: center; */
+  color: white;
+  /* background-color: var(--complementary-blue); */
+}
+
+.banner h1 {
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--yellow);
+  text-align: left;
+}
+
+.banner h2 {
+  font-size: 20px;
+  color: var(--white);
+  font-weight: light;
+  font-style: italic;
+}
+
+/* Sections */
+section {
+  padding: 50px;
+  /* text-align: center; */
+}
+
+section h2{
+  color: var(--red);
+}
+
+/* Products */
+.products-icon {
+  height: 100px;
+  width: 100px;
+}
+
+#products{
+  text-align: center;
+}
+
+#products h2{
+  margin-bottom: 20px;
+}
+#products .button{
+  border: 2px solid black;
+  background-color: var(--red);
+  color: white;
+  padding: 10px 15%;
+  /* margin-left: 30%; */
+}
+
+.products-icon:hover {
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+
+/* Footer */  
+footer {
+  background: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+}

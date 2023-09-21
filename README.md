@@ -1,1 +1,0 @@
-longer size for product description?
